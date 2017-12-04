@@ -30,6 +30,8 @@ dependencies {
     compile 'com.google.android.gms:play-services-location:11.6.0'
     compile 'me.dm7.barcodescanner:zxing:1.9'
     compile 'com.journeyapps:zxing-android-embedded:3.4.0'
+    //noinspection GradleDynamicVersion
+    compile 'com.google.maps.android:android-maps-utils:0.4+'
     testCompile 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'

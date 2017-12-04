@@ -62,7 +62,7 @@ public class Login extends AppCompatActivity {
 
 
     public void onButton3Clicked(View v){
-        Intent intent = new Intent(this,TeamSelectScene.class);
+        Intent intent = new Intent(this,MenuActivity.class);
         startActivity(intent);
     }
 }

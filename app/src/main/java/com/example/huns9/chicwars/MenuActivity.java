@@ -70,6 +70,7 @@ public class MenuActivity extends AppCompatActivity {
                         JSONObject obj = new JSONObject(result.getContents());
                         score2.setText(obj.getString("score"));
 
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

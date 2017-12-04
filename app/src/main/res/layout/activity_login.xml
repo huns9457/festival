@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onButton3Clicked"
-            android:text="수정" />
+            android:text="확인" />
 
         <Button
             android:id="@+id/select"

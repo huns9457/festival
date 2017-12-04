@@ -10,6 +10,50 @@
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        class="com.google.android.gms.maps.MapFragment" />
+        class="com.google.android.gms.maps.MapFragment">
+
+    </fragment>
+    <Button
+        android:id="@+id/duru"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:onClick="duruButtonClicked"
+        android:text="화장실"
+        android:background="@drawable/qr"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.945"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.969" />
+
+    <Button
+        android:id="@+id/duru1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/qr"
+        android:onClick="duru1ButtonClicked"
+        android:text="흡연장"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.952"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.872" />
+
+    <Button
+        android:id="@+id/duru2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/qr"
+        android:onClick="duru2ButtonClicked"
+        android:text="구급실"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.952"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.775" />
+
 
 </android.support.constraint.ConstraintLayout>

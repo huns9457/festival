@@ -2,13 +2,17 @@ package com.example.huns9.chicwars;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
@@ -16,6 +20,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +30,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
@@ -65,6 +71,18 @@ public class MissionMap extends AppCompatActivity
     Location mCurrentLocatiion;
     boolean mMoveMapByUser = true;
     boolean mMoveMapByAPI = true;
+    double distance;
+    String meter;
+    boolean state = false;
+
+    private static final LatLng PERTH = new LatLng(35.848578,128.558083);
+    private static final LatLng DURU = new LatLng(35.848113, 128.554465);
+    private static final LatLng DURU1 = new LatLng(35.845578, 128.556199);
+
+
+    private Marker mPerth;
+    private Marker mDuru;
+    private Marker mDuru1;
 
     LocationRequest locationRequest = new LocationRequest()
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -82,7 +100,6 @@ public class MissionMap extends AppCompatActivity
 
         Log.d(TAG, "onCreate");
         mActivity = this;
-
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -138,7 +155,7 @@ public class MissionMap extends AppCompatActivity
 
 
             Log.d(TAG, "startLocationUpdates : call FusedLocationApi.requestLocationUpdates");
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, (com.google.android.gms.location.LocationListener) this);
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
             mRequestingLocationUpdates = true;
 
             mGoogleMap.setMyLocationEnabled(true);
@@ -152,7 +169,7 @@ public class MissionMap extends AppCompatActivity
     private void stopLocationUpdates() {
 
         Log.d(TAG,"stopLocationUpdates : LocationServices.FusedLocationApi.removeLocationUpdates");
-        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (com.google.android.gms.location.LocationListener) this);
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         mRequestingLocationUpdates = false;
     }
 
@@ -165,12 +182,27 @@ public class MissionMap extends AppCompatActivity
 
         mGoogleMap = googleMap;
 
-
         //런타임 퍼미션 요청 대화상자나 GPS 활성 요청 대화상자 보이기전에
         //지도의 초기위치를 서울로 이동
         setDefaultLocation();
 
         //mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
+
+        mPerth = googleMap.addMarker( new MarkerOptions()
+                .position(PERTH)
+                .title("미션 : 치킨 브랜드 맞추기") );
+        mPerth.setTag(0);
+
+        mDuru = googleMap.addMarker(new MarkerOptions()
+                .position(DURU)
+                .title("미션 : 닭 캐릭터와 사진 찍기"));
+        mDuru.setTag(0);
+
+        mDuru1 = googleMap.addMarker(new MarkerOptions()
+                .position(DURU1)
+                .title("미션 : 쓰레기 주워오기"));
+        mDuru1.setTag(0);
+
         mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
         mGoogleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener(){
@@ -232,23 +264,52 @@ public class MissionMap extends AppCompatActivity
 
         //현재 위치에 마커 생성하고 이동
         setCurrentLocation(location, markerTitle, markerSnippet);
-
         mCurrentLocatiion = location;
-    }
 
-    @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
+        Location locationA = new Location("pointA");
+        locationA.setLatitude(35.859615 );
+        locationA.setLongitude(128.486468 );
+        distance = locationA.distanceTo( mCurrentLocatiion );
+        meter = Double.toString(distance);
 
-    }
+        int mDistance = (int)distance;
+        Log.d( TAG, meter   +"m");
+        if(state == false)
+        {
+            if (mDistance >= 2 && mDistance <= 5) {
+                Bitmap mLargelconForNoti =
+                        BitmapFactory.decodeResource(getResources(),R.drawable.chic);
+                PendingIntent mPendingIntent = PendingIntent.getActivity(MissionMap.this,0,
+                        new Intent(getApplicationContext(), MissionMap.class),
+                        PendingIntent.FLAG_UPDATE_CURRENT);
+                NotificationCompat.Builder mBuilder =
+                        new NotificationCompat.Builder( MissionMap.this )
+                                .setSmallIcon( R.drawable.chic )
+                                .setContentTitle( "히든미션!" )
+                                .setContentText("지윤이 엉덩이로 이름쓰기")
+                        .setDefaults( Notification.DEFAULT_VIBRATE)
+                        .setLargeIcon( mLargelconForNoti )
+                        .setPriority( NotificationCompat.PRIORITY_DEFAULT )
+                        .setAutoCancel(true)
+                        .setContentIntent(mPendingIntent);
 
-    @Override
-    public void onProviderEnabled(String s) {
+                NotificationManager mNotificationManager =
+                        (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                mNotificationManager.notify( 0,mBuilder.build() );
 
-    }
 
-    @Override
-    public void onProviderDisabled(String s) {
-
+                //Toast.makeText(this,"환영한닭!", Toast.LENGTH_LONG).show();
+                //Intent intent = new Intent( this, MenuActivity.class );
+                //startActivity( intent );
+                state = true;
+            }
+        }
+        else if(state == true)
+        {
+            if (!(mDistance >= 2 && mDistance <= 5)) {
+                state = false;
+            }
+        }
     }
 
 
@@ -492,8 +553,6 @@ public class MissionMap extends AppCompatActivity
                     mGoogleApiClient.connect();
                 }
 
-
-
             } else {
 
                 checkPermissions();
@@ -605,6 +664,5 @@ public class MissionMap extends AppCompatActivity
                 break;
         }
     }
-
 
 }
