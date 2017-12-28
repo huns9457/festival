@@ -51,6 +51,12 @@ public class MenuActivity extends AppCompatActivity {
         Intent intent = new Intent(this,MissionScene.class);
         startActivity(intent);
     }
+
+    public void onWaitButtonClicked(View v){
+        Intent intent = new Intent(this,waiting.class);
+        startActivity(intent);
+    }
+
     @Override
     protected  void onActivityResult(int requestCode, int resultCode, Intent data){
         final DBHelper dbHelper = new DBHelper(getApplicationContext(), "EGG.db", null, 1);

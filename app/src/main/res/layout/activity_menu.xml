@@ -71,5 +71,18 @@
         android:text=""
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="72dp"
+        android:layout_height="79dp"
+        android:background="@drawable/to"
+        android:onClick="onWaitButtonClicked"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.525"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.153" />
+
 
 </android.support.constraint.ConstraintLayout>
