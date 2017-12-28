@@ -8,6 +8,11 @@
     android:layout_margin="15dp"
     android:padding="10dp">
 
+    <TextView
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:text="     번호      받으실 분                      주문 내역" />
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="0dp"
