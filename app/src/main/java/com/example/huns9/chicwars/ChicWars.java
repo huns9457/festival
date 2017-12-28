@@ -12,6 +12,8 @@ public class ChicWars extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chic_wars);
+
+
     }
     public void onButton1Clicked(View v){
         Toast.makeText(this,"환영한닭!", Toast.LENGTH_LONG).show();

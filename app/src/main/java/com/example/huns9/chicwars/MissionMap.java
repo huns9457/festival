@@ -267,8 +267,8 @@ public class MissionMap extends AppCompatActivity
         mCurrentLocatiion = location;
 
         Location locationA = new Location("pointA");
-        locationA.setLatitude(35.859615 );
-        locationA.setLongitude(128.486468 );
+        locationA.setLatitude(35.859622 );
+        locationA.setLongitude(128.486467 );
         distance = locationA.distanceTo( mCurrentLocatiion );
         meter = Double.toString(distance);
 
@@ -286,7 +286,7 @@ public class MissionMap extends AppCompatActivity
                         new NotificationCompat.Builder( MissionMap.this )
                                 .setSmallIcon( R.drawable.chic )
                                 .setContentTitle( "히든미션!" )
-                                .setContentText("지윤이 엉덩이로 이름쓰기")
+                                .setContentText("닭 캐릭터와 사진 찍기")
                         .setDefaults( Notification.DEFAULT_VIBRATE)
                         .setLargeIcon( mLargelconForNoti )
                         .setPriority( NotificationCompat.PRIORITY_DEFAULT )

@@ -51,12 +51,9 @@ public class MenuActivity extends AppCompatActivity {
         Intent intent = new Intent(this,MissionScene.class);
         startActivity(intent);
     }
-   // public void onScheduleButtonClicked(View v){
-        //Intent intent = new Intent(this,MissionScene.class);
-        //startActivity(intent);
-    //}
     @Override
     protected  void onActivityResult(int requestCode, int resultCode, Intent data){
+        final DBHelper dbHelper = new DBHelper(getApplicationContext(), "EGG.db", null, 1);
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null){
 
@@ -68,6 +65,8 @@ public class MenuActivity extends AppCompatActivity {
                 try {
                     {
                         JSONObject obj = new JSONObject(result.getContents());
+
+
                         score2.setText(obj.getString("score"));
 
 
